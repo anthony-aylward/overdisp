@@ -8,9 +8,9 @@
 Usage: overdisp [options] [<file>]
 
 -h, --help             show this help message
+--min-coverage <int>   minimum coverage level [default: 10]
 --nbreaks <int>        number of breaks for the NPBin spline [default: 11]
 --ncores <int>         number of cores to use [default: 1]
---min-coverage <int>   minimum coverage level [default: 10]
 --order <int>          spline order for NPBin [default: 4]
 " -> doc
 
@@ -90,10 +90,18 @@ main <- function(opt) {
   print(null_parameters)
 }
 
+parse_options <- function(doc) {
+  opt <- docopt(doc)
+  for (option in c("min-coverage", "nbreaks", "order", "ncores")) {
+    opt[[option]] <- as.integer(opt[[option]])
+  }
+  opt
+}
+
 
 
 
 # Execute ======================================================================
 
-opt <- docopt(doc)
+opt <- parse_options(doc)
 main(opt)
