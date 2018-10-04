@@ -90,6 +90,7 @@ main <- function(opt) {
     allelic_ratio[!is.na(total)],
     r_by = 0.025
   )
+  print(lsse_parameters)
   null_parameters <- estimate_null_parameters(
     counts_frame,
     minimum_coverage = opt[["min-coverage"]],
