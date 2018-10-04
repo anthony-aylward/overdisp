@@ -14,10 +14,10 @@ Usage: overdisp.R [<file>]
 
 # Libraries ====================================================================
 
+library(docopt)
 library(npbin)
 
 suppressMessages(library(chenimbalance))
-suppressMessages(library(docopt))
 
 
 
