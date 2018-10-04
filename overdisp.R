@@ -5,8 +5,13 @@
 
 "Estimate overdispersion parameters from allele count data
 
-Usage: overdisp.R [<file>]
+Usage: overdisp [options] [<file>]
 
+-h, --help             show this help message
+--nbreaks <int>        number of breaks for the NPBin spline [default: 11]
+--ncores <int>         number of cores to use [default: 1]
+--min-coverage <int>   minimum coverage level [default: 10]
+--order <int>          spline order for NPBin [default: 4]
 " -> doc
 
 
@@ -14,10 +19,9 @@ Usage: overdisp.R [<file>]
 
 # Libraries ====================================================================
 
+library(chenimbalance)
 library(docopt)
 library(npbin)
-
-suppressMessages(library(chenimbalance))
 
 
 
@@ -35,9 +39,55 @@ load_data_from_stdin_or_file <- function(file_option) {
   }
 }
 
+estimate_null_parameters <- function(
+  data_frame,
+  minimum_coverage = 10,
+  n_breaks = 11,
+  spline_order = 4,
+  n_cores = 1
+) {
+  data_table <- convert_to_data_table(
+    npbin_preprocess_counts(data_frame),
+    minimum_coverage = minimum_coverage
+  )
+
+  n <- nrow(data_table)
+  breaks <- seq(0, 1, length.out = n_breaks)
+  pi_init <- initialize_weights(data_table, n_breaks, spline_order)
+
+  overall_model_estimate <- emBinBspl(
+    data_table[, xm],
+    data_table[, m],
+    breaks = breaks,
+    k = spline_order,
+    pi.init = pi_init,
+    ncores = n_cores,
+    err.max = 1e-3,
+    iter.max = 200
+  )
+  null_model_estimate <- estNull(
+    data_table[, xm],
+    data_table[, m],
+    overall_model_estimate,
+    init = NULL,
+    iter.max = 200,
+    ncores = n_cores,
+    ub = rep(log(1e4), 2),
+    err.max = 1e-4
+  )
+  null_model_estimate[["coef.null"]]
+}
+
 main <- function(opt) {
   counts <- load_data_from_stdin_or_file(opt[["file"]])
-  print(head(counts))
+  null_parameters <- estimate_null_parameters(
+    counts_frame,
+    minimum_coverage = opt[["min-coverage"]],
+    n_breaks = opt[["nbreaks"]],
+    spline_order = opt[["order"]],
+    n_cores = opt[["ncores"]]
+  )
+  print(null_parameters)
 }
 
 
