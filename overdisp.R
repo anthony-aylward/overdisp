@@ -80,9 +80,9 @@ estimate_null_parameters <- function(
 
 main <- function(opt) {
   counts_frame <- load_data_from_stdin_or_file(opt[["file"]])
-  print(head(counts_frame))
-  print(names(counts_frame))
-  counts_frame <- counts_frame[["coverage"]] >= opt[["min-coverage"]]
+  counts_frame <- counts_frame[
+    counts_frame[["coverage"]] >= opt[["min-coverage"]],
+  ]
   total <- counts_frame[["coverage"]]
   allelic_ratio <- counts_frame[["ref_count"]] / total
   lsse_parameters <- alleledb_beta_binomial(
