@@ -20,6 +20,7 @@ Usage: overdisp [options] [<file>]
 # Libraries ====================================================================
 
 library(docopt)
+library(jsonlite)
 library(npbin)
 
 suppressMessages(library(chenimbalance))
