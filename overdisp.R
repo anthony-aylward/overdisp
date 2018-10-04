@@ -103,7 +103,7 @@ main <- function(opt) {
         lsse_shape = c(
           lsse_parameters[["shape1"]],
           lsse_parameters[["shape2"]]
-        )
+        ),
         null_shape = c(
           null_parameters[["shape1"]],
           null_parameters[["shape2"]]
