@@ -79,7 +79,7 @@ estimate_null_parameters <- function(
 }
 
 main <- function(opt) {
-  counts <- load_data_from_stdin_or_file(opt[["file"]])
+  counts_frame <- load_data_from_stdin_or_file(opt[["file"]])
   null_parameters <- estimate_null_parameters(
     counts_frame,
     minimum_coverage = opt[["min-coverage"]],
