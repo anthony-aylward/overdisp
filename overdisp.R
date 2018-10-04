@@ -90,7 +90,6 @@ main <- function(opt) {
     allelic_ratio[!is.na(total)],
     r_by = 0.025
   )
-  print(lsse_parameters)
   null_parameters <- estimate_null_parameters(
     counts_frame,
     minimum_coverage = opt[["min-coverage"]],
@@ -98,7 +97,20 @@ main <- function(opt) {
     spline_order = opt[["order"]],
     n_cores = opt[["ncores"]]
   )
-  print(null_parameters)
+  cat(
+    toJSON(
+      list(
+        lsse_shape = c(
+          lsse_parameters[["shape1"]],
+          lsse_parameters[["shape2"]]
+        )
+        null_shape = c(
+          null_parameters[["shape1"]],
+          null_parameters[["shape2"]]
+        )
+      )
+    )
+  )
 }
 
 parse_options <- function(doc) {
