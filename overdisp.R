@@ -80,7 +80,7 @@ estimate_null_parameters <- function(
 
 main <- function(opt) {
   counts_frame <- load_data_from_stdin_or_file(opt[["file"]])
-  head(counts_frame)
+  print(head(counts_frame))
   counts_frame <- counts_frame[["coverage"]] >= opt[["min-coverage"]]
   total <- counts_frame[["coverage"]]
   allelic_ratio <- counts_frame[["ref_count"]] / total
