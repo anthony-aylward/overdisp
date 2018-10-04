@@ -19,10 +19,10 @@ Usage: overdisp [options] [<file>]
 
 # Libraries ====================================================================
 
-library(chenimbalance)
 library(docopt)
 library(npbin)
 
+suppressMessages(library(chenimbalance))
 
 
 
