@@ -10,7 +10,7 @@ Usage: overdisp [options] [<file>]
 -h, --help             show this help message
 --min-coverage <int>   minimum coverage level [default: 10]
 --nbreaks <int>        number of breaks for the NPBin spline [default: 11]
---ncores <int>         number of cores to use [default: 1]
+--cores <int>         number of cores to use [default: 1]
 --order <int>          spline order for NPBin [default: 4]
 " -> doc
 
@@ -46,7 +46,7 @@ estimate_null_parameters <- function(
   minimum_coverage = 10,
   n_breaks = 11,
   spline_order = 4,
-  n_cores = 1
+  cores = 1
 ) {
   data_table <- convert_to_data_table(
     npbin_preprocess_counts(data_frame),
@@ -63,7 +63,7 @@ estimate_null_parameters <- function(
     breaks = breaks,
     k = spline_order,
     pi.init = pi_init,
-    ncores = n_cores,
+    ncores = cores,
     err.max = 1e-3,
     iter.max = 200
   )
@@ -73,7 +73,7 @@ estimate_null_parameters <- function(
     overall_model_estimate,
     init = NULL,
     iter.max = 200,
-    ncores = n_cores,
+    ncores = cores,
     ub = rep(log(1e4), 2),
     err.max = 1e-4
   )
@@ -97,7 +97,7 @@ main <- function(opt) {
     minimum_coverage = opt[["min-coverage"]],
     n_breaks = opt[["nbreaks"]],
     spline_order = opt[["order"]],
-    n_cores = opt[["ncores"]]
+    cores = opt[["cores"]]
   )
   cat(
     toJSON(
@@ -117,7 +117,7 @@ main <- function(opt) {
 
 parse_options <- function(doc) {
   opt <- docopt(doc)
-  for (option in c("min-coverage", "nbreaks", "order", "ncores")) {
+  for (option in c("min-coverage", "nbreaks", "order", "cores")) {
     opt[[option]] <- as.integer(opt[[option]])
   }
   opt
