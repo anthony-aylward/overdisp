@@ -50,6 +50,21 @@ ESTIMATE_NULL_PARAMETERS_SCRIPT = (
 # Functions ====================================================================
 
 def estimate_lsse_parameters(counts_frame, temp_dir=None):
+    """Estimate LSSE parameters
+    
+    Parameters
+    ----------
+    counts_frame
+        A pandas data frame containing allele counts
+    temp_dir
+        directory for temporary files
+
+    Returns
+    -------
+    dict
+        The estimated parameters in a dictionary with keys:
+    """
+
     with tempfile.NamedTemporaryFile(dir=temp_dir) as temp_counts:
         temp_counts_name = temp_counts.name
     counts_frame.to_csv(temp_counts_name, sep='\t', na_rep='NA', index=False)
@@ -72,8 +87,22 @@ def estimate_null_parameters(
     n_breaks=11,
     spline_order=4,
     processes=1,
-    temp_dir=None
+    temp_dir=None,
+    force=False
 ):
+    """Estimate LSSE parameters
+    
+    Parameters
+    ----------
+    counts_frame
+        A pandas data frame containing allele counts
+
+    Returns
+    -------
+    dict
+        The estimated parameters in a dictionary with keys:
+    """
+    
     with tempfile.NamedTemporaryFile(dir=temp_dir) as temp_counts:
         temp_counts_name = temp_counts.name
     counts_frame.to_csv(temp_counts_name, sep='\t', na_rep='NA', index=False)
