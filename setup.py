@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='overdisp',
-    version='0.0.1',
+    version='0.1.0',
     author='Anthony Aylward',
     author_email='aaylward@eng.ucsd.edu',
     description='Estimation of overdispersion parameters',
