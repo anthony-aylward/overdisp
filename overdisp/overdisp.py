@@ -90,7 +90,7 @@ def estimate_null_parameters(
     temp_dir=None,
     force=False
 ):
-    """Estimate LSSE parameters
+    """Estimate npbin parameters
     
     Parameters
     ----------
