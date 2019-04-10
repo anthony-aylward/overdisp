@@ -96,12 +96,28 @@ def estimate_null_parameters(
     ----------
     counts_frame
         A pandas data frame containing allele counts
+    minimum_coverage
+    n_breaks
+    spline_order
+    processes
+        number of processes to use (max 32)
+    temp_dir
+    force
+        allow more than 32 processes
 
     Returns
     -------
     dict
         The estimated parameters in a dictionary with keys:
     """
+
+    if processes > 32 and not force:
+        raise RuntimeError(
+            'Using `estimate_null_parameters()` with a large number of '
+            'processes sometimes causes segmentation faults, so it is strongly '
+            'reccomended that you use 32 or fewer. If you really must try it '
+            f'with {processes} processes, set `force=True`.'
+        )
     
     with tempfile.NamedTemporaryFile(dir=temp_dir) as temp_counts:
         temp_counts_name = temp_counts.name
