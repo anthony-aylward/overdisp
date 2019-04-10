@@ -97,11 +97,15 @@ def estimate_null_parameters(
     counts_frame
         A pandas data frame containing allele counts
     minimum_coverage
+        Minimum coverage level for variants to include
     n_breaks
+        passed to NPBin
     spline_order
+        passed to NPBin
     processes
         number of processes to use (max 32)
     temp_dir
+        directory for temporary files
     force
         allow more than 32 processes
 
@@ -137,4 +141,3 @@ def estimate_null_parameters(
         parameters = json.loads(r.communicate()[0])
     os.remove(temp_counts_name)
     return parameters
-
