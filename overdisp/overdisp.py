@@ -76,7 +76,9 @@ def estimate_lsse_parameters(counts_frame, temp_dir=None):
         ),
         stdout=subprocess.PIPE
     ) as r:
-        parameters = json.loads(r.communicate()[0])
+        parameters = {
+            k: v[0] for k, v in json.loads(r.communicate()[0]).items()
+        }
     os.remove(temp_counts_name)
     return parameters
 
@@ -138,6 +140,8 @@ def estimate_null_parameters(
         ),
         stdout=subprocess.PIPE
     ) as r:
-        parameters = json.loads(r.communicate()[0])
+        parameters = {
+            k: v[0] for k, v in json.loads(r.communicate()[0]).items()
+        }
     os.remove(temp_counts_name)
     return parameters
